@@ -1,0 +1,5 @@
+cffi==1.15.1
+Cython==0.29.32
+invoke==1.7.3
+pybind11==2.10.1
+pycparser==2.21
