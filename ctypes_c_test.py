@@ -1,31 +1,23 @@
-#!/usr/bin/env python
-""" Simple examples of calling C functions through ctypes module. """
-import ctypes
-import sys
 import pathlib
+import sys
+import ctypes
+""" Simple examples of calling C functions through ctypes module. """
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     libname = pathlib.Path().absolute()
     print("libname: ", libname)
 
     # Load the shared library into c types.
     if sys.platform.startswith("win"):
-        c_lib = ctypes.CDLL(libname / "cmult.dll")
+        c_lib = ctypes.CDLL(libname / "csort.dll")
     else:
-        c_lib = ctypes.CDLL(libname / "libcmult.so")
+        c_lib = ctypes.CDLL(libname / "libcsort.so")
 
     # Sample data for our call:
-    x, y = 6, 2.3
-
-    # This will not work:
-    # answer = c_lib.cmult(x, y)
-
+    x = [2, 1, 4, 3, 5]
+    # convert list to ctypes int array
+    y = (ctypes.c_int * len(x))(*x) 
     # This produces a bad answer:
-    answer = c_lib.cmult(x, ctypes.c_float(y))
-    print(f"    In Python: int: {x} float {y:.1f} return val {answer:.1f}")
+    answer = c_lib.c_sort(y, len(y))
+    print(f"    In Python: array: {x} return sorted array {y[:]}")
     print()
-
-    # You need tell ctypes that the function returns a float
-    c_lib.cmult.restype = ctypes.c_float
-    answer = c_lib.cmult(x, ctypes.c_float(y))
-    print(f"    In Python: int: {x} float {y:.1f} return val {answer:.1f}")
