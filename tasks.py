@@ -167,10 +167,8 @@ def build_cython(c):
     """Build the cython extension module"""
     print_banner("Building Cython Module")
     # Run cython on the pyx file to create a .cpp file
-    invoke.run("cython --cplus -3 cython_example.pyx -o cython_wrapper.cpp")
-
-    # Compile and link the cython wrapper library
-    compile_python_module("cython_wrapper.cpp", "cython_example")
+    invoke.run("python3 sort_Test.pyx ")
+    invoke.run("python3 setup.py build_ext --inplace")
     print("* Complete")
 
 
@@ -178,7 +176,7 @@ def build_cython(c):
 def test_cython(c):
     """Run the script to test Cython"""
     print_banner("Testing Cython Module")
-    invoke.run("python3 cython_test.py", pty=True)
+    invoke.run("python3 run.py", pty=True)
 
 
 @invoke.task(
