@@ -62,6 +62,16 @@ def build_csort(c, path=None):
         invoke.run("gcc -shared -o libcsort.so csort.o")
         print("* Complete")
 
+@invoke.task()
+def test_ctypes_native_sort(c):
+    """Run the script to test ctypes native sort"""
+    print_banner("Testing ctypes Module for native C qsort()")
+    # pty and python3 didn't work for me (win).
+    if on_win:
+        invoke.run("python ctypes_c_native_sort.py")
+    else:
+        invoke.run("python3.8 ctypes_c_native_sort.py", pty=True)
+
 
 @invoke.task()
 def test_ctypes(c):
@@ -180,6 +190,16 @@ def test_cython(c):
     print_banner("Testing Cython Module")
     invoke.run("python3 cython_test.py", pty=True)
 
+
+@invoke.task()
+def test_python_quicksort(c):
+    """Run the script to test python quick sort"""
+    print_banner("Testing python quick sort")
+    # pty and python3 didn't work for me (win).
+    if on_win:
+        invoke.run("python qsort.py")
+    else:
+        invoke.run("python3.8 qsort.py", pty=True)
 
 @invoke.task(
     clean,
