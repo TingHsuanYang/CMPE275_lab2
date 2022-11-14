@@ -139,7 +139,7 @@ def build_cppsort(c):
 def compile_python_module(cpp_name, extension_name):
     invoke.run(
         "g++ -O3 -Wall -Werror -shared -std=c++11 -fPIC "
-        "`python3 -m pybind11 --includes` "
+        "`python3.8 -m pybind11 --includes` "
         "-I /usr/include/python3.8 -I .  "
         "{0} "
         "-o {1}`python3.8-config --extension-suffix` "
@@ -151,7 +151,7 @@ def compile_python_module(cpp_name, extension_name):
 def build_pybind11(c):
     """Build the pybind11 wrapper library"""
     print_banner("Building PyBind11 Module")
-    compile_python_module("pybind11_wrapper.cpp", "pybind11_example")
+    compile_python_module("pybind11_wrapper.cpp", "pybind11_cppsort")
     print("* Complete")
 
 
@@ -159,7 +159,7 @@ def build_pybind11(c):
 def test_pybind11(c):
     """Run the script to test PyBind11"""
     print_banner("Testing PyBind11 Module")
-    invoke.run("python3 pybind11_test.py", pty=True)
+    invoke.run("python3.8 pybind11_test.py", pty=True)
 
 
 @invoke.task(build_cppsort)

@@ -1,7 +1,7 @@
 #include <pybind11/pybind11.h>
-#include <cppmult.hpp>
+#include "cppsort.hpp"
 
-PYBIND11_MODULE(pybind11_example, m) {
-    m.doc() = "pybind11 example plugin"; // Optional module docstring
-    m.def("cpp_function", &cppmult, "A function which multiplies two numbers");
+PYBIND11_MODULE(pybind11_cppsort, m) {
+    m.doc() = "pybind11 sort plugin"; // Optional module docstring
+    m.def("cpp_sort", &cpp_sort, "A function that sorts an array");
 }

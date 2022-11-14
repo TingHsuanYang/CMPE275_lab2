@@ -1,9 +1,13 @@
 #!/usr/bin/env python
-import pybind11_example
+import pybind11_cppsort
+import numpy as np
+
 
 if __name__ == "__main__":
     # Sample data for our call:
-    x, y = 6, 2.3
-
-    answer = pybind11_example.cpp_function(x, y)
-    print(f"    In Python: int: {x} float {y:.1f} return val {answer:.1f}")
+    x = [2, 1, 4, 3, 5]
+    y = list(x)
+    a = np.array([2, 1, 4, 3, 5,4])
+    pybind11_cppsort.cpp_sort(a, len(a))
+    print(f"    In Python: array: {x} return sorted array {a}")
+    print()
