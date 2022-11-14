@@ -1,5 +1,6 @@
 #include <pybind11/pybind11.h>
 #include <pybind11/stl.h>
+#include "cppsort.hpp"
 
 // swap
 void swap(int* a, int* b) {
@@ -40,4 +41,9 @@ std::vector<int> pybind11_cpp_sort(std::vector<int> arr) {
 PYBIND11_MODULE(pybind11_cppsort, m) {
     m.doc() = "pybind11 sort plugin";  // Optional module docstring
     m.def("pybind11_cpp_sort", &pybind11_cpp_sort, "A function that sorts an array");
+}
+
+PYBIND11_MODULE(cpp_sort, m) {
+    m.doc() = "cpp_sort plugin";  // Optional module docstring
+    m.def("cpp_sort", &cpp_sort, "cpp sort");
 }

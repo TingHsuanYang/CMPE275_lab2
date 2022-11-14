@@ -1,6 +1,8 @@
 import pathlib
 import sys
 import ctypes
+import time
+import random
 """ Simple examples of calling C functions through ctypes module. """
 
 if __name__ == '__main__':
@@ -14,10 +16,14 @@ if __name__ == '__main__':
         c_lib = ctypes.CDLL(libname / "libcsort.so")
 
     # Sample data for our call:
-    x = [2, 1, 4, 3, 5]
+    k = 10000
+    x = random.sample(range(0, k), k)
+
     # convert list to ctypes int array
-    y = (ctypes.c_int * len(x))(*x) 
-    # This produces a bad answer:
+    y = (ctypes.c_int * len(x))(*x)
+
+    start_time = time.time_ns()
     answer = c_lib.c_sort(y, len(y))
+
     print(f"    In Python: array: {x} return sorted array {y[:]}")
-    print()
+    print("--- %s ns ---" % (time.time_ns() - start_time))
