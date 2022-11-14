@@ -89,32 +89,7 @@ def test_ctypes_cpp(c):
 def build_cffi(c):
     """Build the CFFI Python bindings"""
     print_banner("Building CFFI Module")
-    ffi = cffi.FFI()
-
-    this_dir = pathlib.Path().resolve()
-    h_file_name = this_dir / "csort.h"
-    with open(h_file_name) as h_file:
-        # cffi does not like our preprocessor directives, so we remove them
-        lns = h_file.read().splitlines()
-        flt = filter(lambda ln: not re.match(r" *#", ln), lns)
-        flt = map(lambda ln: ln.replace("EXPORT_SYMBOL ", ""), flt)
-        ffi.cdef(str("\n").join(flt))
-
-    ffi.set_source(
-        "cffi_example",
-        # Since we are calling a fully built library directly no custom source
-        # is necessary. We need to include the .h files, though, because behind
-        # the scenes cffi generates a .c file which contains a Python-friendly
-        # wrapper around each of the functions.
-        '#include "csort.h"',
-        # The important thing is to include the pre-built lib in the list of
-        # libraries we are linking against:
-        libraries=["csort"],
-        library_dirs=[this_dir.as_posix()],
-        extra_link_args=["-Wl,-rpath,."],
-    )
-
-    ffi.compile()
+    invoke.run("python3 build_cffi.py ")
     print("* Complete")
 
 
@@ -122,7 +97,7 @@ def build_cffi(c):
 def test_cffi(c):
     """Run the script to test CFFI"""
     print_banner("Testing CFFI Module")
-    invoke.run("python3.8 cffi_test.py", pty=not on_win)
+    invoke.run("python3 run_cffi.py")
 
 
 @invoke.task()
