@@ -2,6 +2,7 @@ import pathlib
 import random
 import sys
 import ctypes
+import time
 """ Simple examples of calling C functions through ctypes module. """
 
 if __name__ == '__main__':
@@ -22,6 +23,9 @@ if __name__ == '__main__':
     y = (ctypes.c_int * len(x))(*x)
 
     # This produces a bad answer:
+    start_time = time.time_ns()
     answer = cpp_lib.cpp_sort(y, len(y))
+    end_time = time.time_ns()
+
     print(f"    In Python: array: {x} return sorted array {y[:]}")
-    print()
+    print("--- %s ns ---" % (end_time - start_time))

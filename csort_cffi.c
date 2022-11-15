@@ -55,9 +55,7 @@ int* sort(int arr[],int len) {
  
     printArray(arr, len);
     quickSort(arr, 0, len - 1);
-    printf("After \n");
     printArray(arr, len);
-    //quickSort(arr, 0, arr.size() - 1);
     return arr;
 }
 
