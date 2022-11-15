@@ -1,13 +1,10 @@
 """ Task definitions for invoke command line utility for python bindings
     overview article.
 """
-import cffi
 import invoke
-import pathlib
 import sys
 import os
 import shutil
-import re
 import glob
 
 on_win = sys.platform.startswith("win")
@@ -24,7 +21,8 @@ def clean(c):
         "*.exp",
         "*.lib",
         "*.pyd",
-        "cffi_example*",  # Is this a dir?
+        "pysort.c",
+        "sort_Test.c",
         "cython_wrapper.cpp",
     ):
         for file in glob.glob(file_pattern):
@@ -99,7 +97,7 @@ def test_ctypes_cpp(c):
 def build_cffi(c):
     """Build the CFFI Python bindings"""
     print_banner("Building CFFI Module")
-    invoke.run("python3 build_cffi.py ")
+    invoke.run("python3.8 build_cffi.py ")
     print("* Complete")
 
 
@@ -107,7 +105,7 @@ def build_cffi(c):
 def test_cffi(c):
     """Run the script to test CFFI"""
     print_banner("Testing CFFI Module")
-    invoke.run("python3 run_cffi.py")
+    invoke.run("python3.8 run_cffi.py")
 
 
 @invoke.task()
@@ -152,8 +150,7 @@ def build_cython(c):
     """Build the cython extension module"""
     print_banner("Building Cython Module")
     # Run cython on the pyx file to create a .cpp file
-    invoke.run("python3 sort_Test.pyx ")
-    invoke.run("python3 setup.py build_ext --inplace")
+    invoke.run("python3.8 setup.py build_ext --inplace")
     print("* Complete")
 
 
@@ -161,7 +158,7 @@ def build_cython(c):
 def test_cython(c):
     """Run the script to test Cython"""
     print_banner("Testing Cython Module")
-    invoke.run("python3 run.py", pty=True)
+    invoke.run("python3.8 run.py", pty=True)
 
 
 @invoke.task()
@@ -180,12 +177,14 @@ def test_python_quicksort(c):
     build_cppsort,
     test_ctypes,
     test_ctypes_cpp,
+    test_ctypes_native_sort,
     build_cffi,
     test_cffi,
     build_pybind11,
     test_pybind11,
     build_cython,
     test_cython,
+    test_python_quicksort
 )
 def all(c):
     """Build and run all tests"""

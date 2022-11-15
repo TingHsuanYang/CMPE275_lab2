@@ -18,7 +18,7 @@ if __name__ == '__main__':
         return a[0] - b[0]
 
     # Sample data for our call:
-    k = 1000000
+    k = 10
     x = random.sample(range(0, k), k)
 
     # convert list to ctypes int array
@@ -28,5 +28,5 @@ if __name__ == '__main__':
     qsort(y, len(y), sizeof(c_int), py_cmp_func)  
     end_time = time.time_ns()
 
-    # print(f"    In Python: array: {x} return sorted array {y[:]}")
+    print(f"    In Python: array: {x} return sorted array {y[:]}")
     print("--- %s ns ---" % (end_time - start_time))

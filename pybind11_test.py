@@ -4,7 +4,7 @@ import pybind11_cppsort
 
 if __name__ == "__main__":
     # Sample data for our call:
-    k = 1000000
+    k = 10
     x = random.sample(range(0, k), k)
 
     start_time = time.time_ns()

@@ -16,7 +16,7 @@ if __name__ == '__main__':
         c_lib = ctypes.CDLL(libname / "libcsort.so")
 
     # Sample data for our call:
-    k = 1000000
+    k = 10
     x = random.sample(range(0, k), k)
 
     # convert list to ctypes int array
@@ -26,5 +26,5 @@ if __name__ == '__main__':
     answer = c_lib.c_sort(y, len(y))
     end_time = time.time_ns()
 
-    # print(f"    In Python: array: {x} return sorted array {y[:]}")
+    print(f"    In Python: array: {x} return sorted array {y[:]}")
     print("--- %s ns ---" % (end_time - start_time))
